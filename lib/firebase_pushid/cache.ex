@@ -1,4 +1,4 @@
-defmodule FirebasePushid.Data do
+defmodule FirebasePushid.Cache do
   defstruct prev_ts: 0, random_nums: [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
 
   def start_link do
@@ -17,8 +17,8 @@ defmodule FirebasePushid.Data do
   Gets and updates prev_ts
   example:
 
-      iex> {:ok, data} = FirebasePushid.Data.start_link(:independent)
-      ...> FirebasePushid.Data.get_and_update(data, :prev_ts, 5)
+      iex> {:ok, data} = FirebasePushid.Cache.start_link(:independent)
+      ...> FirebasePushid.Cache.get_and_update(data, :prev_ts, 5)
       5
   """
   def get_and_update(pid, :prev_ts, value) do
@@ -32,8 +32,8 @@ defmodule FirebasePushid.Data do
   Updates prev_ts
   example:
 
-      iex> {:ok, data} = FirebasePushid.Data.start_link(:independent)
-      ...> FirebasePushid.Data.update(data, :prev_ts, 5)
+      iex> {:ok, data} = FirebasePushid.Cache.start_link(:independent)
+      ...> FirebasePushid.Cache.update(data, :prev_ts, 5)
       :ok
   """
   def update(pid, :prev_ts, value) do

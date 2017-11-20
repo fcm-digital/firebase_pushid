@@ -4,7 +4,7 @@ defmodule FirebasePushid do
   If colision will happen because same timestamp has been already created
   it will increment the random string.
   """
-  alias FirebasePushid.Data
+  alias FirebasePushid.Cache
   alias FirebasePushid.Bump
 
   @doc """
@@ -27,8 +27,8 @@ defmodule FirebasePushid do
   x) -KyukibfiPUIPSaeXoB0
   """
   def generate do
-    # { :ok, data } = Data.start_link(:independent)
-    next_id(Data, seed())
+    # { :ok, data } = Cache.start_link(:independent)
+    next_id(Cache, seed())
   end
 
 
@@ -36,22 +36,22 @@ defmodule FirebasePushid do
   @charts_list (@push_charts |> String.codepoints)
 
   @doc """
-  Generates Firebase id with previous cached data (FirebasePushid.Data) and
+  Generates Firebase id with previous cached data (FirebasePushid.Cache) and
   timestamp.
   """
   def next_id(data, ts) do
-    is_dup = (ts == Data.prev_ts(data))
+    is_dup = (ts == Cache.prev_ts(data))
 
-    Data.update(data, :prev_ts, ts)
+    Cache.update(data, :prev_ts, ts)
     id = build_ts_char_list(ts) |> Enum.join
 
     if is_dup do
       increment_list(data)
     else
-      Data.set_random_nums(data, random_nums(12))
+      Cache.set_random_nums(data, random_nums(12))
     end
 
-    tail = Data.random_nums(data)
+    tail = Cache.random_nums(data)
            |> string_by_nums
 
     id = id <> tail
@@ -72,9 +72,9 @@ defmodule FirebasePushid do
   """
   def increment_list(list) when is_list(list), do: Bump.call(list)
   def increment_list(data) when is_pid(data)  do
-    new_list = Data.random_nums(data)
+    new_list = Cache.random_nums(data)
                |> Bump.call()
-    Data.set_random_nums(data, new_list)
+    Cache.set_random_nums(data, new_list)
   end
 
   @doc """
