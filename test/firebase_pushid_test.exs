@@ -3,8 +3,12 @@ defmodule FirebasePushidTest do
   doctest FirebasePushid
   import FirebasePushid
 
+  test 'generate' do
+    assert generate
+  end
+
   test "new_id" do
-    { :ok, data } = FirebasePushid.Data.start_link
+    { :ok, data } = FirebasePushid.Data.start_link(:independent)
     ts = 1510666856939
     id = next_id(data, ts)
     assert id

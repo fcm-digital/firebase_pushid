@@ -27,8 +27,8 @@ defmodule FirebasePushid do
   x) -KyukibfiPUIPSaeXoB0
   """
   def generate do
-    { :ok, data } = Data.start_link
-    next_id(data, seed())
+    # { :ok, data } = Data.start_link(:independent)
+    next_id(Data, seed())
   end
 
 

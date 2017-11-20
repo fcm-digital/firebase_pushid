@@ -2,6 +2,10 @@ defmodule FirebasePushid.Data do
   defstruct prev_ts: 0, random_nums: [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
 
   def start_link do
+    Agent.start_link(fn -> %__MODULE__{} end, name: __MODULE__)
+  end
+
+  def start_link(:independent) do
     Agent.start_link(fn -> %__MODULE__{} end)
   end
 
@@ -13,7 +17,7 @@ defmodule FirebasePushid.Data do
   Gets and updates prev_ts
   example:
 
-      iex> {:ok, data} = FirebasePushid.Data.start_link
+      iex> {:ok, data} = FirebasePushid.Data.start_link(:independent)
       ...> FirebasePushid.Data.get_and_update(data, :prev_ts, 5)
       5
   """
@@ -28,7 +32,7 @@ defmodule FirebasePushid.Data do
   Updates prev_ts
   example:
 
-      iex> {:ok, data} = FirebasePushid.Data.start_link
+      iex> {:ok, data} = FirebasePushid.Data.start_link(:independent)
       ...> FirebasePushid.Data.update(data, :prev_ts, 5)
       :ok
   """

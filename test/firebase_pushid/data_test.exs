@@ -3,11 +3,11 @@ defmodule FirebasePushid.DataTest do
   alias FirebasePushid.Data
   doctest Data
   test "prev_ts" do
-    {:ok, data} = Data.start_link
+    {:ok, data} = Data.start_link(:independent)
     assert Data.prev_ts(data) == 0
   end
   test "update_prev_ts" do
-    {:ok, data} = Data.start_link
+    {:ok, data} = Data.start_link(:independent)
     assert Data.update(data, :prev_ts, 12) == :ok
     assert Data.prev_ts(data) == 12
   end
