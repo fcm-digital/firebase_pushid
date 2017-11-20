@@ -1,8 +1,7 @@
 defmodule FirebasePushid do
   @moduledoc """
   Generates a timestamp based id as Firebase does.
-  If colision will happen because same timestamp has been already created
-  it will increment the random string.
+  If same timestamp has already generate id it generates new id sortable.
   """
   alias FirebasePushid.Cache
   alias FirebasePushid.Bump
@@ -10,7 +9,7 @@ defmodule FirebasePushid do
   @doc """
   Generates Firebase id.
   It caches with previous timestamp.
-  If same timestamp is stored in the data if will generate an incremental id
+  If same timestamp is stored in the cache it will generate an incremental id
   in base 64 trying to increment the last possible character.
   ex:
   1) -Kyukibfm7T0jJT_Deyr
