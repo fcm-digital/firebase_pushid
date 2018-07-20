@@ -4,7 +4,7 @@ defmodule FirebasePushidTest do
   import FirebasePushid
 
   test 'generate' do
-    assert generate
+    assert generate()
   end
 
   test "new_id" do
@@ -23,6 +23,6 @@ defmodule FirebasePushidTest do
   end
 
   test "Multiple calls with FirebasePushid.Cache" do
-    for _ <- 1..100, do: generate
+    for _ <- 1..100, do: generate()
   end
 end
