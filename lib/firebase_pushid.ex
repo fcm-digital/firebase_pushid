@@ -70,9 +70,12 @@ defmodule FirebasePushid do
       [3, 0]
   """
   def increment_list(list) when is_list(list), do: Bump.call(list)
-  def increment_list(data) when is_pid(data)  do
-    new_list = Cache.random_nums(data)
-               |> Bump.call()
+
+  def increment_list(data) when is_pid(data) or data == Cache do
+    new_list =
+      Cache.random_nums(data)
+      |> Bump.call()
+
     Cache.set_random_nums(data, new_list)
   end
 

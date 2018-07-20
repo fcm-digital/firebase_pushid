@@ -4,7 +4,7 @@ defmodule FirebasePushidTest do
   import FirebasePushid
 
   test 'generate' do
-    assert generate
+    assert generate()
   end
 
   test "new_id" do
@@ -20,5 +20,9 @@ defmodule FirebasePushidTest do
     assert String.at(id, 17) == String.at(new_id, 17)
     another_id = next_id(data, 1510666856950)
     assert String.slice(another_id, 0..7) != "-Kyukibf"
+  end
+
+  test "Multiple calls with FirebasePushid.Cache" do
+    for _ <- 1..100, do: generate()
   end
 end
